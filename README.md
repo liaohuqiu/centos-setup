@@ -1,2 +1,2 @@
-centos-lamp
+some scripts for setting up centos
 ===========
