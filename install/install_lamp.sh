@@ -129,6 +129,8 @@ function install_apache()
 
     # register service
     exe_cmd "cp -f $current_dir/sample/apache/2.2/httpd.init /etc/init.d/httpd"
+    exe_cmd "cp -f $current_dir/sample/apache/2.2/httpd.conf $apache_dir/conf"
+    exe_cmd "cp -f $current_dir/sample/apache/2.2/httpd-default.conf $apache_dir/conf"
 
     chmod 755 /etc/init.d/httpd
     chkconfig --add httpd
