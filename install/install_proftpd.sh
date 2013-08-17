@@ -2,6 +2,7 @@
 #
 . ../base.sh
 
+current_dir=`pwd`
 mysql_path="/usr/local/mysql"
 
 mysqldata="/data0/data/mysql"

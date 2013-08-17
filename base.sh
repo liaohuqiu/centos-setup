@@ -67,9 +67,3 @@ function change_line()
         mv $file_temp $file
     fi
 }
-
-# todo: remove
-current_dir=`pwd`
-apache_dir="/usr/local/apache"
-
-str_sp='+++++++++++++++++++++++++++++++++++++++++++++'

@@ -9,6 +9,8 @@ downloads_dir=$install_dir/download
 usr_local_lib='/usr/local/lib'
 usr_local_etc='/usr/local/etc'
 
+current_dir=`pwd`
+
 function error_control()
 {
     if [ $1 != 0 ];then
