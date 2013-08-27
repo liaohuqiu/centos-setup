@@ -77,6 +77,6 @@ fi
 
 rm -rf $usr_local_etc/php.d/*
 
-ln -s /usr/local/php/bin/php /usr/bin/php54
+ln -s /usr/local/php54/bin/php /usr/bin/php54
 ln -sf /usr/local/php/bin/phpize /usr/bin/phpize
 ln -sf /usr/local/php/bin/php-config /usr/bin/phpize-config
