@@ -40,3 +40,11 @@ function goto_src()
     local app_name=$1
     exe_cmd "cd $src_dir/$app_name"
 }
+
+function parallel_make()
+{
+    cpunum=`cat /proc/cpuinfo |grep 'processor'|wc -l`
+    make -j$cpunum
+}
+
+

@@ -2,6 +2,11 @@
 
 function make_dir()
 {
+    ensure_dir $1
+}
+
+function ensure_dir()
+{
     if [ ! -d $1 ]; then
         exe_cmd "mkdir -p $1"
     fi

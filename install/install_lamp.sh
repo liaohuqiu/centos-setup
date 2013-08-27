@@ -4,7 +4,7 @@
 
 install_dir="/data0/install"
 src_dir=$install_dir/src
-downloads_dir=$install_dir/download
+downloads_dir=$install_dir/downloads
 
 usr_local_lib='/usr/local/lib'
 usr_local_etc='/usr/local/etc'
