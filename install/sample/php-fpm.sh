@@ -10,6 +10,17 @@ Options:
 "
 s="start"
 
+pid_file=/home/admin/fpm-php/var/run/php-fpm.pid
+php_ini=/home/admin/fpm-php/lib/php.ini
+php_fpm_conf=/home/admin/fpm-php/etc/php-fpm.conf
+php_fpm=/home/admin/fpm-php/sbin/php-fpm
+
+function exe_cmd() 
+{
+    echo $1
+    eval $1
+}
+
 while getopts s:h opt
 do
     case $opt in
@@ -25,18 +36,15 @@ done
 echo 'php-fpm'
 case $s in
     "start" )
-    echo '正在启动'
-    /php/sbin/php-fpm
-    echo '已启动'
+    echo 'start'
+    exe_cmd "$php_fpm_conf -c=$php_ini -g=$pid_file -y=$php_fpm_conf"
     ;;
     "stop" )
-    echo '正在关闭'
-    kill -INT `cat /php/var/run/php-fpm.pid`
-    echo '已关闭'
+    echo "stop"
+    exe_cmd "kill -INT `cat $pid_file`"
     ;;
     "restart"|"reload" )
-    echo '正在重启'
-    kill -USR2 `cat /php/var/run/php-fpm.pid`
-    echo '已重启'
+    echo "reload"
+    exe_cmd "kill -USR2 `cat $pid_file`"
     ;;
 esac
