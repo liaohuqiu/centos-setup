@@ -7,7 +7,7 @@ url=$2
 
 install_dir="/data0/install"
 src_dir=$install_dir/src
-downloads_dir=$install_dir/download
+downloads_dir=$install_dir/downloads
 
 make_dir $downloads_dir;
 make_dir $src_dir;

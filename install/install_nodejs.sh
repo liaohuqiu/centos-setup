@@ -4,7 +4,7 @@
 
 install_dir="/data0/install"
 src_dir=$install_dir/src
-downloads_dir=$install_dir/download
+downloads_dir=$install_dir/downloads
 
 url="http://nodejs.org/dist/v0.10.12/node-v0.10.12.tar.gz"
 nodejs_file_name="node-v0.10.12"
