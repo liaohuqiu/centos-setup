@@ -8,10 +8,12 @@
 
 app=php-5.4.18
 url=http://www.php.net/get/php-5.4.18.tar.gz/from/us1.php.net/mirror
-env='dev'                           # dev/prod
-php_path=/usr/local/php54
+env="dev"                           # dev/prod
+
+php_path=/usr/local/php
 apach_path=/usr/local/apache/bin/apxs
-usr_local_etc=/usr/local/etc/php54
+
+php_config_path=$php_path/etc
 
 function install_basic()
 {
@@ -22,8 +24,8 @@ function install_basic()
 }
 
 ensure_dir $php_path
-#ensure_dir $usr_local_etc
-ensure_dir $usr_local_etc/php.d
+ensure_dir $php_config_path
+ensure_dir $php_config_path/php.d
 install_basic
 download_src $app $url
 goto_src $app
@@ -48,8 +50,8 @@ goto_src $app
 #--with-zlib                        pear 打包要用。
 #--with-xsl                         phpdoc2 要用。
 #--with-apxs2                       apach mod_php
-#--with-config-file-path            $usr_local_etc
-#--with-config-file-scan-dir        $usr_local_etc/php.d
+#--with-config-file-path            $php_config_path
+#--with-config-file-scan-dir        $php_config_path/php.d
 #--enable-ftp 
 #--with-freetype-dir
 #--enable-gd-native-ttf
@@ -57,7 +59,7 @@ goto_src $app
 #--with-mysql=/usr/local/mysql 
 #--without-pear
 
-configure_cmd="--prefix=$php_path --enable-fpm --enable-bcmath --with-curl --with-mcrypt --enable-mbstring --with-pdo-mysql=mysqlnd --with-mysqli=mysqlnd --with-mysql --with-openssl --with-imap-ssl --with-gd --with-jpeg-dir=/usr/lib/ --with-png-dir=/usr/lib/ --enable-exif --enable-zip --with-zlib --with-apxs2=$apach_path --with-config-file-path=$usr_local_etc --with-config-file-scan-dir=$usr_local_etc/php.d --enable-ftp  --with-freetype-dir --enable-gd-native-ttf --with-iconv=/usr/local/libiconv --with-mysql=/usr/local/mysql --without-pear"
+configure_cmd="--prefix=$php_path --enable-fpm --enable-bcmath --with-curl --with-mcrypt --enable-mbstring --with-pdo-mysql=mysqlnd --with-mysqli=mysqlnd --with-mysql --with-openssl --with-imap-ssl --with-gd --with-jpeg-dir=/usr/lib/ --with-png-dir=/usr/lib/ --enable-exif --enable-zip --with-zlib --with-apxs2=$apach_path --with-config-file-path=$php_config_path --with-config-file-scan-dir=$php_config_path/php.d --enable-ftp  --with-freetype-dir --enable-gd-native-ttf --with-iconv=/usr/local/libiconv --with-mysql=/usr/local/mysql --without-pear"
 
 if [ $env = 'dev' ]; then
     configure_cmd="$configure_cmd --with-xsl"
@@ -68,15 +70,15 @@ exe_cmd "./configure $configure_cmd"
 parallel_make 2>/root/lamp_errors.log
 exe_cmd "make install"
 
-#exe_cmd "cp -f $current_dir/sample/conf/php5.2.ini $usr_local_etc/php.ini"
+#exe_cmd "cp -f $current_dir/sample/conf/php5.2.ini $php_config_path/php.ini"
 if [ $env = 'prod' ]; then
-    exe_cmd "cp php.ini-production $usr_local_etc/php.ini"
+    exe_cmd "cp php.ini-production $php_config_path/php.ini"
 else
-    exe_cmd "cp php.ini-development $usr_local_etc/php.ini"
+    exe_cmd "cp php.ini-development $php_config_path/php.ini"
 fi
 
-rm -rf $usr_local_etc/php.d/*
+rm -rf $php_config_path/php.d/*
 
-ln -s /usr/local/php54/bin/php /usr/bin/php54
-ln -sf /usr/local/php/bin/phpize /usr/bin/phpize
-ln -sf /usr/local/php/bin/php-config /usr/bin/php-config
+ln -s $php_path/bin/php /usr/bin/php
+ln -sf $php_path/bin/phpize /usr/bin/phpize
+ln -sf $php_path/bin/php-config /usr/bin/php-config
