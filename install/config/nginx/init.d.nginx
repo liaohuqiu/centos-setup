@@ -16,18 +16,20 @@
 # Check that networking is up.
 [ "$NETWORKING" = "no" ] && exit 0
  
-nginx="/usr/sbin/nginx"
+nginx_dir="/usr/local/nginx"
+nginx=$nginx_dir"/sbin/nginx"
 prog=$(basename $nginx)
-NGINX_CONF_FILE=$nginx"/conf/nginx.conf"
+NGINX_CONF_FILE=$nginx_dir"/conf/nginx.conf"
  
 lockfile=/var/lock/subsys/nginx
+
+function exe_cmd() {
+    echo $1
+    eval $1
+}
  
 make_dirs() {
    # make required directories
-   user=`$nginx -V 2>&1 | grep "configure arguments:" | sed 's/[^*]*--user=\([^ ]*\).*/\1/g' -`
-   if [ -z "`grep $user /etc/passwd`" ]; then
-       useradd -M -s /bin/nologin $user
-   fi
    options=`$nginx -V 2>&1 | grep 'configure arguments:'`
    for opt in $options; do
        if [ `echo $opt | grep '.*-temp-path'` ]; then
@@ -45,7 +47,7 @@ start() {
     [ -f $NGINX_CONF_FILE ] || exit 6
     make_dirs
     echo -n $"Starting $prog: "
-    daemon $nginx -c $NGINX_CONF_FILE
+    exe_cmd "daemon $nginx -c $NGINX_CONF_FILE"
     retval=$?
     echo
     [ $retval -eq 0 ] && touch $lockfile
@@ -94,12 +96,16 @@ rh_status_q() {
  
 case "$1" in
     start)
-        rh_status_q && exit 0
+        rh_status_q && echo "nginx is running" && exit 0
         $1
         ;;
     stop)
-        rh_status_q || exit 0
-        $1
+        rh_status_q
+        if [ $? -eq 0 ]; then
+            $1
+        else
+            echo "nginx is not running" && exit 0
+        fi
         ;;
     restart|configtest)
         $1

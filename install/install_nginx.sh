@@ -9,12 +9,16 @@ current_dir=`pwd`
 nginx_path="/usr/local/nginx"
 sample_config_dir=$current_dir"/config/nginx"
 
-download_src $app $url
-goto_src $app
 
-./configure --prefix=$nginx_path
-make
-make install
+function do_install()
+{
+    download_src $app $url
+    goto_src $app
+
+    ./configure --prefix=$nginx_path
+    make
+    make install
+}
 
 function make_easy_use()
 {
