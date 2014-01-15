@@ -134,6 +134,8 @@ function install_apache()
     exe_cmd "cp -f $current_dir/sample/apache/2.2/httpd.conf $apache_dir/conf"
     exe_cmd "cp -f $current_dir/sample/apache/2.2/httpd-default.conf $apache_dir/conf/extra"
 
+    make_dir "$apache_dir/conf/vhosts"
+
     chmod 755 /etc/init.d/httpd
     chkconfig --add httpd
     chkconfig httpd on
