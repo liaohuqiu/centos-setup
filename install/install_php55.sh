@@ -7,8 +7,8 @@
 #php pecl
 
 current_dir=`pwd`
-app=php-5.4.18
-url=http://www.php.net/get/php-5.4.18.tar.gz/from/us1.php.net/mirror
+app=php-5.5.9
+url=http://centos-files.liaohuqiu.net/f/php-5.5.9.tar.gz
 env="dev"                           # dev/prod
 
 php_path=/usr/local/php
