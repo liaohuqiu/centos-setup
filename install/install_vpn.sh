@@ -1,6 +1,6 @@
-yum install ppp
+yum install -y ppp
 
-wget http://www.liaohuqiu.net/centos_setup/f/pptpd-1.3.4-2.el6.x86_64.rpm
+wget http://centos-files.liaohuqiu.net/f/pptpd-1.3.4-2.el6.x86_64.rpm
 rpm -ihv pptpd-1.3.4-2.el6.x86_64.rpm
 rm -rf *.rpm
 
@@ -49,7 +49,6 @@ function config_iptables()
 
     # Allow server and internal network to go anyway
     iptables -A INPUT  -s 10.0.0.0/24   -m state --state NEW  -j ACCEPT
-    iptables -A INPUT  -s 199.101.100.10   -m state --state NEW  -j ACCEPT
     iptables -A OUTPUT  -m state --state NEW  -j ACCEPT
 
     # Allow ssh
@@ -61,6 +60,7 @@ function config_iptables()
 
 chkconfig pptpd on
 service pptpd start
+config_iptables
 
 ip=`/sbin/ifconfig eth0 | grep 'inet addr:' | cut -d: -f2 | awk '{ print $1}'`
 echo "===================================="
