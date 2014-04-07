@@ -3,7 +3,7 @@
 . ./install_base.sh
 
 app=nginx-1.4.2
-url=http://nginx.org/download/nginx-1.4.2.tar.gz
+url="http://centos-files.liaohuqiu.net/f/nginx-1.4.2.tar.gz"
 
 current_dir=`pwd`
 nginx_path="/usr/local/nginx"
@@ -28,5 +28,7 @@ function make_easy_use()
     chkconfig nginx on
     service nginx start
 }
+
+do_install
 
 make_easy_use

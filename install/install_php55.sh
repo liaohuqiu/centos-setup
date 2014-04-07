@@ -12,7 +12,6 @@ url=http://centos-files.liaohuqiu.net/f/php-5.5.9.tar.gz
 env="dev"                           # dev/prod
 
 php_path=/usr/local/php
-apach_path=/usr/local/apache/bin/apxs
 
 php_config_path=$php_path/etc
 sample_config_dir=$current_dir"/config/php"
@@ -61,7 +60,7 @@ function do_install()
     #--with-mysql=/usr/local/mysql 
     #--without-pear
 
-    configure_cmd="--prefix=$php_path --enable-fpm --enable-bcmath --with-curl --with-mcrypt --enable-mbstring --with-pdo-mysql=mysqlnd --with-mysqli=mysqlnd --with-mysql --with-openssl --with-imap-ssl --with-gd --with-jpeg-dir=/usr/lib/ --with-png-dir=/usr/lib/ --enable-exif --enable-zip --with-zlib --with-apxs2=$apach_path --with-config-file-path=$php_config_path --with-config-file-scan-dir=$php_config_path/php.d --enable-ftp  --with-freetype-dir --enable-gd-native-ttf --with-iconv=/usr/local/libiconv --with-mysql=/usr/local/mysql --without-pear"
+    configure_cmd="--prefix=$php_path --enable-fpm --enable-bcmath --with-curl --with-mcrypt --enable-mbstring --with-pdo-mysql=mysqlnd --with-mysqli=mysqlnd --with-mysql --with-openssl --with-imap-ssl --with-gd --with-jpeg-dir=/usr/lib/ --with-png-dir=/usr/lib/ --enable-exif --enable-zip --with-zlib --with-config-file-path=$php_config_path --with-config-file-scan-dir=$php_config_path/php.d --enable-ftp  --with-freetype-dir --enable-gd-native-ttf --with-iconv=/usr/local/libiconv --with-mysql=/usr/local/mysql --without-pear"
 
     if [ $env = 'dev' ]; then
         configure_cmd="$configure_cmd --with-xsl"

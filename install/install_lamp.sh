@@ -50,7 +50,7 @@ function download_files()
         echo "$file_name [found]"
     else
         echo "$file_name [not found]"
-        exe_cmd "wget http://centos.googlecode.com/files/$file_name"
+        exe_cmd "wget http://centos-files.liaohuqiu.net/f/$file_name"
         if [ ! -f $local_path ]; then
             echo "Failed to download $1, please download it to "$downloads_dir" directory manually and rerun the install script."
             exit 1
