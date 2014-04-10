@@ -3,11 +3,7 @@
 . ../base.sh
 
 app_name=$1
-url=$2
-
-if [ $# != 2 ]; then
-    url="http://centos-files.liaohuqiu.net/f/$app_name.tar.gz"
-fi
+url="http://centos-files.liaohuqiu.net/f/$app_name.tar.gz"
 
 install_dir="/data0/install"
 src_dir=$install_dir/src
@@ -28,5 +24,3 @@ if [ ! -d $src_dir/$app_name ]; then
     exe_cmd "tar -zxvf $downloads_dir/$app_name.tar.gz -C $src_dir"
 fi
 exe_cmd "cd $src_dir/$app_name"
-exe_cmd "./configure"
-exe_cmd "make && make install"
