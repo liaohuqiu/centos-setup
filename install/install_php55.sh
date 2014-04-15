@@ -23,7 +23,7 @@ ensure_dir $php_config_path/php.d
 function install_basic()
 {
     #todo:  make clear what the dependency
-    #apt-get install -y build-essential autoconf libmemcached-dev curl imagemagick libmagickwand-dev libevent-dev libtool libxml2-dev libssl-dev libcurl4-openssl-dev libjpeg-dev libpng12-dev libmcrypt-dev libxslt1-dev sendmail zlib1g-dev
+    #apt-get install -y build-essential autoconf libmemcached-dev curl imagemagick libmagickwand-dev libevent-dev libtool libxml2-dev libssl-dev libcurl4-openssl-dev libjpeg-dev libng12-dev libmcrypt-dev libxslt1-dev sendmail zlib1g-dev
 
     yum -y install gcc gcc-c++ libtool-libs autoconf freetype-devel gd libjpeg-devel  libpng-devel libxml2-devel ncurses-devel zlib-devel zip unzip curl-devel wget crontabs  file bison cmake patch mlocate flex diffutils automake make kernel-devel cpp readline-devel openssl-devel vim-minimal sendmail glibc-devel  glib2-devel bzip2-devel e2fsprogs-devel libidn-devel  gettext-devel expat-devel libcap-devel libtool-ltdl-devel pam-devel pcre-devel libmcrypt-devel sendmail libxslt-devel
 }
@@ -60,7 +60,7 @@ function do_install()
     #--with-mysql=/usr/local/mysql 
     #--without-pear
 
-    configure_cmd="--prefix=$php_path --enable-fpm --enable-bcmath --with-curl --with-mcrypt --enable-mbstring --with-pdo-mysql=mysqlnd --with-mysqli=mysqlnd --with-mysql --with-openssl --with-imap-ssl --with-gd --with-jpeg-dir=/usr/lib/ --with-png-dir=/usr/lib/ --enable-exif --enable-zip --with-zlib --with-config-file-path=$php_config_path --with-config-file-scan-dir=$php_config_path/php.d --enable-ftp  --with-freetype-dir --enable-gd-native-ttf --with-iconv=/usr/local/libiconv --with-mysql=/usr/local/mysql --without-pear"
+    configure_cmd="--prefix=$php_path --enable-fpm --enable-bcmath --with-curl --with-mcrypt --enable-mbstring --with-pdo-mysql=mysqlnd --with-mysqli=mysqlnd --enable-mysqlnd --with-mysql --with-openssl --with-imap-ssl --with-gd --with-jpeg-dir=/usr/lib/ --with-png-dir=/usr/lib/ --enable-exif --enable-zip --with-zlib --with-config-file-path=$php_config_path --with-config-file-scan-dir=$php_config_path/php.d --enable-ftp  --with-freetype-dir --enable-gd-native-ttf --with-iconv=/usr/local/libiconv --with-mysql=/usr/local/mysql --without-pear"
 
     if [ $env = 'dev' ]; then
         configure_cmd="$configure_cmd --with-xsl"
