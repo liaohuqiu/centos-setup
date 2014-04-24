@@ -63,7 +63,7 @@ function do_install()
     configure_cmd="--prefix=$php_path --enable-fpm --enable-bcmath --with-curl --with-mcrypt --enable-mbstring --with-pdo-mysql=mysqlnd --with-mysqli=mysqlnd --enable-mysqlnd --with-mysql --with-openssl --with-imap-ssl --with-gd --with-jpeg-dir=/usr/lib/ --with-png-dir=/usr/lib/ --enable-exif --enable-zip --with-zlib --with-config-file-path=$php_config_path --with-config-file-scan-dir=$php_config_path/php.d --enable-ftp  --with-freetype-dir --enable-gd-native-ttf --with-iconv=/usr/local/libiconv --with-mysql=/usr/local/mysql --without-pear"
 
     if [ $env = 'dev' ]; then
-        configure_cmd="$configure_cmd --with-xsl"
+        configure_cmd="$configure_cmd --with-xsl --enable-debug --enable-maintainer-zts --with-tsrm-pthreads"
     fi
 
     exe_cmd "./configure $configure_cmd"
@@ -86,6 +86,7 @@ function make_easy_use()
     ln -sf $php_path/bin/php-config /usr/bin/php-config
 
     exe_cmd "cp $sample_config_dir/php-fpm.conf $php_config_path/php-fpm.conf"
+    exe_cmd "cp $sample_config_dir/php-fpm-restart.sh $php_path/sbin/php-fpm-restart.sh"
     exe_cmd "cp $sample_config_dir/init.d.php-fpm /etc/init.d/php-fpm"
 
     chkconfig php-fpm on
