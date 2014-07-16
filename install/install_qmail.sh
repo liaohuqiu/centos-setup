@@ -71,7 +71,7 @@ function intall_qmail()
     exe_cmd "cd $qmail_install_dir"
     exe_cmd "cd $net_qmail/$net_qmail"
     exe_cmd "make setup check"
-    exe_cmd "./config-fast liaohuqiu.net"
+    exe_cmd "./config-fast 163.com"
 
     exe_cmd "cd $qmail_install_dir"
     exe_cmd "cd $ucspi_tcp"

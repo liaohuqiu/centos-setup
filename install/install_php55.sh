@@ -1,5 +1,7 @@
 #!/bin/bash
 
+env="dev"                           # dev/prod
+
 . ./install_base.sh
 
 #todo
@@ -9,7 +11,6 @@
 current_dir=`pwd`
 app=php-5.5.9
 url=http://centos-files.liaohuqiu.net/f/php-5.5.9.tar.gz
-env="dev"                           # dev/prod
 
 php_path=/usr/local/php
 
