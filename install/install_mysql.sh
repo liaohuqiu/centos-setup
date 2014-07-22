@@ -17,12 +17,6 @@ usr_local_etc='/usr/local/etc'
 
 current_dir=`pwd`
 
-function add_user
-{
-    exe_cmd "groupadd $1"
-    exe_cmd "useradd -s /sbin/nologin -g $1 $1"
-}
-
 function parallel_make()
 {
     cpunum=`cat /proc/cpuinfo |grep 'processor'|wc -l`

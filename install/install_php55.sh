@@ -1,6 +1,16 @@
 #!/bin/bash
+#
 
-env="dev"                           # dev/prod
+if [ ! $# -eq 1 ]; then
+    echo "usage: $0 dev|prod"
+    exit 1
+fi
+
+env=$1                           # dev/prod
+if [ $env != 'dev' ] && [ $env != 'prod' ] ; then
+    echo "usage: $0 dev|prod"
+    exit 1
+fi
 
 . ./install_base.sh
 
@@ -13,6 +23,7 @@ app=php-5.5.9
 url=http://centos-files.liaohuqiu.net/f/php-5.5.9.tar.gz
 
 php_path=/usr/local/php
+extension_dir=$php_path'/extensions'
 
 php_config_path=$php_path/etc
 sample_config_dir=$current_dir"/config/php"
@@ -24,8 +35,6 @@ ensure_dir $php_config_path/php.d
 function install_basic()
 {
     #todo:  make clear what the dependency
-    #apt-get install -y build-essential autoconf libmemcached-dev curl imagemagick libmagickwand-dev libevent-dev libtool libxml2-dev libssl-dev libcurl4-openssl-dev libjpeg-dev libng12-dev libmcrypt-dev libxslt1-dev sendmail zlib1g-dev
-
     yum -y install gcc gcc-c++ libtool-libs autoconf freetype-devel gd libjpeg-devel  libpng-devel libxml2-devel ncurses-devel zlib-devel zip unzip curl-devel wget crontabs  file bison cmake patch mlocate flex diffutils automake make kernel-devel cpp readline-devel openssl-devel vim-minimal sendmail glibc-devel  glib2-devel bzip2-devel e2fsprogs-devel libidn-devel  gettext-devel expat-devel libcap-devel libtool-ltdl-devel pam-devel pcre-devel libmcrypt-devel sendmail libxslt-devel
 }
 
@@ -76,10 +85,11 @@ function do_install()
 function make_easy_use()
 {
     if [ $env = 'prod' ]; then
-        exe_cmd "cp $sample_config_dir/php.ini-production $php_config_path/php.ini"
+        exe_cmd "cp $sample_config_dir/php-prod.ini $php_config_path/php.ini"
     else
-        exe_cmd "cp $sample_config_dir/php.ini-development $php_config_path/php.ini"
+        exe_cmd "cp $sample_config_dir/php-dev.ini $php_config_path/php.ini"
     fi
+    exe_cmd "replace $php_config_path/php.ini extension_dir $extension_dir"
     rm -rf $php_config_path/php.d/*
 
     ln -sf $php_path/bin/php /usr/bin/php
@@ -88,6 +98,10 @@ function make_easy_use()
 
     exe_cmd "cp $sample_config_dir/php-fpm.conf $php_config_path/php-fpm.conf"
     exe_cmd "cp $sample_config_dir/php-fpm-restart.sh $php_path/sbin/php-fpm-restart.sh"
+    exe_cmd "cp $sample_config_dir/php-fpm-restart.sh /bin/php-fpm-restart"
+    exe_cmd "chmod +x /bin/php-fpm-restart"
+
+    exe_cmd "cp $sample_config_dir/php-fpm-restart.sh /sbin/fpm-restart"
     exe_cmd "cp $sample_config_dir/init.d.php-fpm /etc/init.d/php-fpm"
 
     chkconfig php-fpm on
@@ -95,6 +109,8 @@ function make_easy_use()
     service php-fpm start
 
 }
+
+add_user www
 
 install_basic
 download_src $app $url

@@ -81,7 +81,7 @@ function install_basic()
 {
     #install some necessary tools
     if [ ! -f /tmp/yum_installed ];then
-        yum -y install gcc  gcc-c++ libtool-libs autoconf freetype-devel gd libjpeg-devel  libpng-devel libxml2-devel ncurses-devel zlib-devel zip unzip curl-devel wget crontabs  file bison cmake patch mlocate flex diffutils automake make kernel-devel cpp readline-devel openssl-devel vim-minimal sendmail glibc-devel  glib2-devel bzip2-devel e2fsprogs-devel libidn-devel  gettext-devel expat-devel libcap-devel  libtool-ltdl-devel pam-devel pcre-devel libmcrypt-devel sendmail && touch /tmp/yum_installed
+        yum -y install gcc  gcc-c++ libtool-libs autoconf freetype-devel gd libjpeg-devel  libpng-devel libxml2-devel ncurses-devel zlib-devel zip unzip wget crontabs  file bison cmake patch mlocate flex diffutils automake make kernel-devel cpp readline-devel openssl-devel vim-minimal sendmail glibc-devel  glib2-devel bzip2-devel e2fsprogs-devel libidn-devel  gettext-devel expat-devel libcap-devel  libtool-ltdl-devel pam-devel pcre-devel libmcrypt-devel sendmail && touch /tmp/yum_installed
         code=$?
         error_control $code "necessary package,please make sure yum command can work!"
     else
@@ -345,7 +345,7 @@ function init_env()
 }
 
 init_env
-install_apache
-install_mysql
+# install_apache
+# install_mysql
 install_lib
-install_php
+# install_php
