@@ -25,6 +25,7 @@ redis_data_dir="/data0/data/redis"
 exe_cmd "make_dir $redis_etc_dir"
 exe_cmd "make_dir $redis_var_dir"
 exe_cmd "make_dir $redis_data_dir"
+exe_cmd "chmod a+w $redis_data_dir"
 
 config_file="$redis_etc_dir/redis-$port.conf"
 service="redis-$port"
