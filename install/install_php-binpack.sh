@@ -5,7 +5,7 @@
 current_dir=`pwd`
 
 ext_name='binpack'
-file_key='binpack-php-20140424'
+file_key='binpack-php-20140812'
 exe_cmd "sh fetch_source.sh $file_key"
 
 src_dir="/data0/install/src/$file_key"
