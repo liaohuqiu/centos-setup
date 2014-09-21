@@ -2,6 +2,8 @@
 
 . ../base.sh
 
+current_dir=`pwd`
+
 ext_name='redis'
 file_key='php-redis-20140409'
 exe_cmd "sh fetch_source.sh $file_key"
