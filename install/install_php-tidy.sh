@@ -6,6 +6,7 @@
 current_dir=`pwd`
 
 ext_name='tidy'
+exe_cmd "yum install -y libtidy libtidy-devel"
 
 file_key=$php_ver_dir'-tidy'
 source_src_dir="/data0/install/src/$php_ver_dir/ext/tidy"
