@@ -4,7 +4,7 @@
 
 app_name=$1
 # url="http://centos-files.liaohuqiu.net/f/$app_name.tar.gz"
-url="https://raw.githubusercontent.com/liaohuqiu/centos-files/gh-pages/f/$app_nametar.gz"
+url="https://raw.githubusercontent.com/liaohuqiu/centos-files/gh-pages/f/$app_name.tar.gz"
 
 install_dir="/data0/install"
 src_dir=$install_dir/src
