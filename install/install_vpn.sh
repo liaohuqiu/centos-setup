@@ -8,12 +8,22 @@ rm -rf /etc/pptpd.conf
 rm -rf /etc/ppp
 mkdir -p /etc/ppp
 
-echo "option /etc/ppp/options.pptpd" >> /etc/pptpd.conf
-echo "localip 10.0.0.1" >> /etc/pptpd.conf
-echo "remoteip 10.0.0.10-100" >> /etc/pptpd.conf
+echo "option /etc/ppp/options.pptpd" > /etc/pptpd.conf
+echo "localip 10.0.0.1" > /etc/pptpd.conf
+echo "remoteip 10.0.0.10-100" > /etc/pptpd.conf
+
+echo "# detail config: https://wiki.archlinux.org/index.php/PPTP_server" > /etc/ppp/options.pptpd
+echo "" >> /etc/ppp/options.pptpd
 
 echo "ms-dns 8.8.8.8" >> /etc/ppp/options.pptpd
 echo "ms-dns 8.8.4.4" >> /etc/ppp/options.pptpd
+echo "" >> /etc/ppp/options.pptpd
+
+echo "refuse-pap" >> /etc/ppp/options.pptpd
+echo "refuse-chap" >> /etc/ppp/options.pptpd
+echo "refuse-mschap" >> /etc/ppp/options.pptpd
+echo "require-mschap-v2" >> /etc/ppp/options.pptpd
+echo "require-mppe-128" >> /etc/ppp/options.pptpd
 
 pass=`openssl rand 6 -base64`
 if [ "$1" != "" ]
