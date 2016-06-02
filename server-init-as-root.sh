@@ -19,7 +19,6 @@ function init_user()
     echo "Init user for path: $path"
     cmd="curl https://raw.githubusercontent.com/liaohuqiu/centos-setup/master/add-user-without-passwd.sh | bash -s $user"
     exe_cmd "$cmd"
-    exe_cmd "su $user"
     exe_cmd "cd $home"
     exe_cmd "mkdir $home/.ssh"
     exe_cmd "chmod 700 $home/.ssh"
