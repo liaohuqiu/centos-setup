@@ -28,6 +28,7 @@ function init_user()
     cmd="curl https://raw.githubusercontent.com/liaohuqiu/centos-setup/master/config/ssh/config > $home/.ssh/config"
     exe_cmd "$cmd"
     exe_cmd "chmod 600 $home/.ssh/config"
+    exe_cmd "chmod -R $user:$user $home/.ssh"
 }
 
 user=$1
