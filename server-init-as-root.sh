@@ -16,8 +16,9 @@ function init_user()
     time=`date +%s`
     user=$1
     ssh_pub_key=$2
+    echo $ssh_pub_key
+
     home="/home/$user"
-    echo "Init user for path: $path"
     cmd="curl https://raw.githubusercontent.com/liaohuqiu/centos-setup/master/add-user-without-passwd.sh?$time | bash -s $user"
     exe_cmd "$cmd"
     exe_cmd "cd $home"
