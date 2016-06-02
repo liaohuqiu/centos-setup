@@ -26,4 +26,3 @@ time=`date +%s`
 cmd="curl https://raw.githubusercontent.com/liaohuqiu/centos-setup/master/server-init-as-root.sh?time=$time | bash -s $user \"$pub_key\""
 
 exe_cmd "ssh $ssh_cmd '$cmd'"
-scp /home/huqiu/git/centos-setup/base.sh exe_cmd "
