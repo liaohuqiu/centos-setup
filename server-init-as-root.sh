@@ -22,12 +22,12 @@ function init_user()
     exe_cmd "cd $home"
     exe_cmd "mkdir $home/.ssh"
     exe_cmd "chmod 700 $home/.ssh"
-    exe_cmd "echo '$ssh_pub_key' >> $home/.ssh/authorized_keys"
+    exe_cmd "echo \"$ssh_pub_key\" >> $home/.ssh/authorized_keys"
     exe_cmd "chmod 600 $home/.ssh/authorized_keys"
     cmd="curl https://raw.githubusercontent.com/liaohuqiu/centos-setup/master/config/ssh/config > $home/.ssh/config"
     exe_cmd "$cmd"
     exe_cmd "chmod 600 $home/.ssh/config"
-    exe_cmd "chmod -R $user:$user $home/.ssh"
+    exe_cmd "chown -R $user:$user $home/.ssh"
 }
 
 user=$1
