@@ -31,7 +31,7 @@ user=$1
 ssh_pub_key=$2
 
 echo $user
-echo ssh_pub_key
+echo $ssh_pub_key
 
 ret=false
 getent passwd $user >/dev/null 2>&1 && ret=true
