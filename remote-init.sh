@@ -24,4 +24,5 @@ pub_key='ssh-rsa AAAAB3NzaC1yc2EAAAADAQABAAABAQDNDjle7eM50ej3D+dyfD8nF6MGi2wQGrQ
 
 time=`date +%s`
 cmd="curl https://raw.githubusercontent.com/liaohuqiu/centos-setup/master/server-init-as-root.sh?time=$time | bash -s $user \"$pub_key\""
+
 exe_cmd "ssh $ssh_cmd '$cmd'"

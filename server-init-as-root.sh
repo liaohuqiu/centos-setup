@@ -20,6 +20,7 @@ function init_user()
 
     home="/home/$user"
     cmd="curl https://raw.githubusercontent.com/liaohuqiu/centos-setup/master/add-user-without-passwd.sh?$time | bash -s $user"
+
     exe_cmd "$cmd"
     exe_cmd "cd $home"
     exe_cmd "mkdir $home/.ssh"
@@ -38,7 +39,7 @@ ssh_pub_key=$2
 ret=false
 getent passwd $user >/dev/null 2>&1 && ret=true
 if ! $ret; then
-    init_user $user \"$ssh_pub_key\"
+    init_user $user \'$ssh_pub_key\'
 fi
 
 if ! $ret; then
