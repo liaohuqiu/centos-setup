@@ -13,18 +13,19 @@ exe_cmd "yum install git -y"
 
 function init_user() 
 {
+    time=`date +%s`
     user=$1
     ssh_pub_key=$2
     home="/home/$user"
     echo "Init user for path: $path"
-    cmd="curl https://raw.githubusercontent.com/liaohuqiu/centos-setup/master/add-user-without-passwd.sh | bash -s $user"
+    cmd="curl https://raw.githubusercontent.com/liaohuqiu/centos-setup/master/add-user-without-passwd.sh?$time | bash -s $user"
     exe_cmd "$cmd"
     exe_cmd "cd $home"
     exe_cmd "mkdir $home/.ssh"
     exe_cmd "chmod 700 $home/.ssh"
-    exe_cmd "echo \"$ssh_pub_key\" >> $home/.ssh/authorized_keys"
+    exe_cmd "echo $ssh_pub_key >> $home/.ssh/authorized_keys"
     exe_cmd "chmod 600 $home/.ssh/authorized_keys"
-    cmd="curl https://raw.githubusercontent.com/liaohuqiu/centos-setup/master/config/ssh/config > $home/.ssh/config"
+    cmd="curl https://raw.githubusercontent.com/liaohuqiu/centos-setup/master/config/ssh/config?$time > $home/.ssh/config"
     exe_cmd "$cmd"
     exe_cmd "chmod 600 $home/.ssh/config"
     exe_cmd "chown -R $user:$user $home/.ssh"
