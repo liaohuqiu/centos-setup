@@ -15,16 +15,17 @@ function init_user()
 {
     user=$1
     ssh_pub_key=$2
+    home="/home/$user"
     cmd="curl https://raw.githubusercontent.com/liaohuqiu/centos-setup/master/add-user-without-passwd.sh | bash -s $user"
     exe_cmd "$cmd"
     exe_cmd "su $user"
-    exe_cmd "cd ~"
-    exe_cmd "mkdir ~/.ssh"
-    exe_cmd "chmod 700 ~/.ssh"
-    exe_cmd "echo '$ssh_pub_key' >> ~/.ssh/authorized_keys"
-    exe_cmd "chmod 600 ~/.ssh/authorized_keys"
-    cmd="curl https://raw.githubusercontent.com/liaohuqiu/centos-setup/master/config/ssh/config > ~/.ssh/config"
-    exe_cmd "chmod 600 ~/.ssh/config"
+    exe_cmd "cd $home"
+    exe_cmd "mkdir $home/.ssh"
+    exe_cmd "chmod 700 $home/.ssh"
+    exe_cmd "echo '$ssh_pub_key' >> $home/.ssh/authorized_keys"
+    exe_cmd "chmod 600 $home/.ssh/authorized_keys"
+    cmd="curl https://raw.githubusercontent.com/liaohuqiu/centos-setup/master/config/ssh/config > $home/.ssh/config"
+    exe_cmd "chmod 600 $home/.ssh/config"
 }
 
 user=$1
