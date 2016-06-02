@@ -28,7 +28,7 @@ function init_user()
 }
 
 user=$1
-user=$2
+ssh_pub_key=$2
 
 ret=false
 getent passwd $user >/dev/null 2>&1 && ret=true
