@@ -27,7 +27,7 @@ function init_user()
     exe_cmd "chmod 700 $home/.ssh"
     echo $key >> $home/.ssh/authorized_keys
     exe_cmd "chmod 600 $home/.ssh/authorized_keys"
-    cmd="curl https://raw.githubusercontent.com/liaohuqiu/centos-setup/master/config/ssh/server-config?$time > $home/.ssh/config"
+    cmd="curl https://raw.githubusercontent.com/liaohuqiu/centos-setup/master/config-templates/ssh/server-config?$time > $home/.ssh/config"
     exe_cmd "$cmd"
     exe_cmd "chmod 600 $home/.ssh/config"
     exe_cmd "chown -R $user:$user $home/.ssh"

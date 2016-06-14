@@ -41,4 +41,9 @@ pub_key=`cat "$ssh_keyfile_pub"`
 time=`date +%s`
 cmd="curl https://raw.githubusercontent.com/liaohuqiu/centos-setup/master/server-init-as-root.sh?time=$time | bash -s $user \"$pub_key\""
 
-exe_cmd "$ssh_cmd '$cmd'"
+$ssh_cmd $cmd
+
+ssh_cmd="ssh $user@$ip_or_host_name"
+cmd="curl https://raw.githubusercontent.com/liaohuqiu/centos-setup/master/server-init-as-root.sh?time=$time | bash "
+
+# $ssh_cmd $cmd

@@ -23,7 +23,7 @@ function change_line()
     local file_temp=$file".temp"
     cp -f $file $file_bak
     if [ $mode == "append" ]; then
-        grep -q "$tag_str" $file || echo "$content" >> $file
+        grep -q "$tag_str" $file || echo "$tag_str" >> $file
     else
         cat $file |awk -v mode="$mode" -v tag_str="$tag_str" -v content="$content" '
         {
