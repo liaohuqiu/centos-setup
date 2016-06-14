@@ -2,7 +2,7 @@
 #
 . ../base.sh
 
-if [ ! $# -lt 2 ]; then
+if [ $# -lt 2 ]; then
     echo "usage: $0 port password [method]"
     exit 1
 fi
@@ -10,7 +10,7 @@ server_port=$1
 password=$2
 method=$3
 
-if [ ! -z "$str" -a "$str" != " " ]; then
+if [[ -z "${method// }" ]]; then
     method="aes-128-cfb"
 fi
 
@@ -38,4 +38,4 @@ if [ ! -d shadowsocks-libev* ]; then
 fi
 echo "$config_content" > /etc/shadowsocks-libev/config.json
 chmod +x /etc/init.d/shadowsocks-libev
-service shadowsocks-libev start
+service shadowsocks-libev restart
