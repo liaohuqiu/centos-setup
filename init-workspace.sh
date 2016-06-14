@@ -27,3 +27,8 @@ if [ ! -d ~/git/vim_anywhere/ ]; then
     exe_cmd "cd ~/git/vim_anywhere/"
     exe_cmd "sh setup.sh"
 fi
+
+if [ ! -d ~/git/centos-setup/ ]; then
+    exe_cmd "cd ~/git"
+    exe_cmd "git clone git@github.com:liaohuqiu/centos-setup.git"
+fi

@@ -36,9 +36,10 @@ cmd="curl https://raw.githubusercontent.com/liaohuqiu/centos-setup/master/server
 
 $ssh_cmd $cmd
 
-eval "$(ssh-agent -s)"
-ssh-add ~/.ssh/id_rsa
+# eval "$(ssh-agent -s)"
+# ssh-add ~/.ssh/id_rsa
 
 ssh_cmd="ssh -A $user@$ip_or_host_name"
-cmd="curl https://raw.githubusercontent.com/liaohuqiu/centos-setup/master/init-workspace.sh?time=$time | bash "
+cmd="curl https://raw.githubusercontent.com/liaohuqiu/centos-setup/master/init-workspace.sh?time=$time > init-workspace.sh"
 exe_cmd "$ssh_cmd '$cmd'"
+exe_cmd "$ssh_cmd"

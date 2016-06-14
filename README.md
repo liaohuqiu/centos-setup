@@ -1,7 +1,7 @@
 some scripts for setting up centos
 ===========
 
-Using root to add user to remote server:
+##### Using root to add user to remote server:
 
 1. create user
 2. add to sudoers
@@ -12,8 +12,8 @@ Using root to add user to remote server:
 sh remote-init.sh ip-or-hostname user-name
 ```
 
-Then exe the output command.
+#### Others
 
-### TODO
-
-- [x] run the init-workspace automatically.
+```
+sh install-shadowsocks-libev.sh port password method
+```
