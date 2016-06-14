@@ -44,6 +44,6 @@ cmd="curl https://raw.githubusercontent.com/liaohuqiu/centos-setup/master/server
 $ssh_cmd $cmd
 
 ssh_cmd="ssh $user@$ip_or_host_name"
-cmd="curl https://raw.githubusercontent.com/liaohuqiu/centos-setup/master/server-init-as-root.sh?time=$time | bash "
+cmd="curl https://raw.githubusercontent.com/liaohuqiu/centos-setup/master/init-workspace.sh?time=$time | bash "
 
-# $ssh_cmd $cmd
+$ssh_cmd $cmd
