@@ -30,9 +30,9 @@ function init_user()
     exe_cmd "chmod 600 $home/.ssh/authorized_keys"
 
     # add ForwardAgent
-    # cmd="curl https://raw.githubusercontent.com/liaohuqiu/centos-setup/master/config-templates/ssh/server-config?$time > $home/.ssh/config"
-    # exe_cmd "$cmd"
-    # exe_cmd "chmod 600 $home/.ssh/config"
+    cmd="curl https://raw.githubusercontent.com/liaohuqiu/centos-setup/master/config-templates/ssh/server-config?$time > $home/.ssh/config"
+    exe_cmd "$cmd"
+    exe_cmd "chmod 600 $home/.ssh/config"
 
     exe_cmd "chown -R $user:$user $home/.ssh"
 }
@@ -47,6 +47,6 @@ if ! $ret; then
 fi
 
 # add ForwardAgent
-# if ! $ret; then
-#     exe_cmd "echo 'ForwardAgent yes' >> /etc/ssh/ssh_config"
-# fi
+if ! $ret; then
+    exe_cmd "echo 'ForwardAgent yes' >> /etc/ssh/ssh_config"
+fi
