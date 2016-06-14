@@ -16,4 +16,4 @@ Then exe the output command.
 
 ### TODO
 
-- [ ] run the init-workspace automatically.
+- [x] run the init-workspace automatically.

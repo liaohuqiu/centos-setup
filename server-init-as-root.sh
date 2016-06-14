@@ -11,6 +11,7 @@ function exe_cmd()
 
 exe_cmd "yum install vim -y"
 exe_cmd "yum install git -y"
+exe_cmd "yum install ctags -y"
 
 function init_user() 
 {
