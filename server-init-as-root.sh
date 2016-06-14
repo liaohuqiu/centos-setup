@@ -8,6 +8,7 @@ function exe_cmd()
     echo $1
     eval $1
 }
+
 exe_cmd "yum install vim -y"
 exe_cmd "yum install git -y"
 
@@ -16,7 +17,6 @@ function init_user()
     time=`date +%s`
     user=$1
     key=$2
-    echo $key
 
     home="/home/$user"
     cmd="curl https://raw.githubusercontent.com/liaohuqiu/centos-setup/master/add-user-without-passwd.sh?$time | bash -s $user"
@@ -25,9 +25,9 @@ function init_user()
     exe_cmd "cd $home"
     exe_cmd "mkdir $home/.ssh"
     exe_cmd "chmod 700 $home/.ssh"
-    exe_cmd "echo '$key' >> $home/.ssh/authorized_keys"
+    echo $key >> $home/.ssh/authorized_keys
     exe_cmd "chmod 600 $home/.ssh/authorized_keys"
-    cmd="curl https://raw.githubusercontent.com/liaohuqiu/centos-setup/master/config/ssh/config?$time > $home/.ssh/config"
+    cmd="curl https://raw.githubusercontent.com/liaohuqiu/centos-setup/master/config/ssh/server-config?$time > $home/.ssh/config"
     exe_cmd "$cmd"
     exe_cmd "chmod 600 $home/.ssh/config"
     exe_cmd "chown -R $user:$user $home/.ssh"
@@ -35,7 +35,6 @@ function init_user()
 
 user=$1
 ssh_pub_key=$2
-echo $ssh_pub_key
 
 ret=false
 getent passwd $user >/dev/null 2>&1 && ret=true

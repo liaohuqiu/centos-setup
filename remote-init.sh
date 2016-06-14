@@ -1,5 +1,5 @@
-if [ ! $# -eq 3 ]; then
-    echo "usage: $0 tag user ssh-root-access-cmd"
+if [ ! $# -eq 2 ]; then
+    echo "usage: $0 ip-or-host-name user"
     exit 1
 fi
 
@@ -9,9 +9,25 @@ function exe_cmd()
     eval $1
 }
 
-tag=$1
+ip_or_host_name=$1
 user=$2
-ssh_cmd=$3
+ssh_cmd="ssh root@$ip_or_host_name"
+
+ssh_keyfile=~/.ssh/auto-gen-$ip_or_host_name
+ssh_keyfile_pub=$ssh_keyfile.pub
+
+if [ ! -f $ssh_keyfile_pub ]; then
+    exe_cmd "ssh-keygen -t rsa -b 4096 -C $ip_or_host_name -f $ssh_keyfile"
+read -d '' config_content <<_EOF
+Host $ip_or_host_name
+    HostName $ip_or_host_name
+    User $user
+    IdentityFile $ssh_keyfile
+_EOF
+
+    echo "$config_content" >> ~/.ssh/config
+    chmod 700 ~/.ssh/config
+fi
 
 # 1. ssh to download script then run:
 #       init basic env
@@ -20,9 +36,9 @@ ssh_cmd=$3
 # 2. generate authkey then copy to remote
 # 3. login as new user, download script then 
 
-pub_key='ssh-rsa AAAAB3NzaC1yc2EAAAADAQABAAABAQDNDjle7eM50ej3D+dyfD8nF6MGi2wQGrQhawNMlIs1OK4XgHgXPl5oLlVVr2BhJ+c4wxbGBQXcRlUplG94K58lf/1higsTsSj2QrJieQwI7DTKrVobZfrvITf4d5BXyKGUW5P7UDBSuuE0VcFtXZUjOTUSDaop+/DHrDSSvO36W1R8ElWFTFE6fYY5cW5jvQhVmuoxu/RFXfRiGzVZ7EADJLenEdVvqhI3cD2Nx7l2QOoVuMWamZeJnl94bOnObxqAB6V1lujPDvHic8C2L/+B1vB/Y9xDn9AKDagVSEV7kn42XZY4+RAD/Nf7v+S6NykrEsoiFbCEmNGfxvCoybvV for all'
+pub_key=`cat "$ssh_keyfile_pub"`
 
 time=`date +%s`
 cmd="curl https://raw.githubusercontent.com/liaohuqiu/centos-setup/master/server-init-as-root.sh?time=$time | bash -s $user \"$pub_key\""
 
-exe_cmd "ssh $ssh_cmd '$cmd'"
+exe_cmd "$ssh_cmd '$cmd'"
