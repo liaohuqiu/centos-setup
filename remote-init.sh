@@ -29,13 +29,6 @@ _EOF
     chmod 700 ~/.ssh/config
 fi
 
-# 1. ssh to download script then run:
-#       init basic env
-#       add user / add sudo
-#       remove script
-# 2. generate authkey then copy to remote
-# 3. login as new user, download script then 
-
 pub_key=`cat "$ssh_keyfile_pub"`
 
 time=`date +%s`
@@ -46,4 +39,7 @@ $ssh_cmd $cmd
 ssh_cmd="ssh $user@$ip_or_host_name"
 cmd="curl https://raw.githubusercontent.com/liaohuqiu/centos-setup/master/init-workspace.sh?time=$time | bash "
 
-$ssh_cmd $cmd
+eval "$(ssh-agent -s)"
+ssh-add ~/.ssh/id_rsa
+
+echo "please run this command to init workspace: $ssh_cmd '$cmd'"
