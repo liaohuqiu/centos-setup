@@ -32,3 +32,20 @@ if [ ! -d ~/git/centos-setup/ ]; then
     exe_cmd "cd ~/git"
     exe_cmd "git clone https://github.com/liaohuqiu/centos-setup.git"
 fi
+
+exe_cmd "sudo yum update"
+
+exe_cmd "curl -fsSL https://get.docker.com/ | sh"
+
+exe_cmd "sudo systemctl enable docker.service"
+
+exe_cmd "sudo systemctl start docker"
+
+user=`id -un`
+exe_cmd "sudo systemctl start docker"
+
+exe_cmd "sudo gpasswd -a $user docker"
+
+exe_cmd "sudo service docker restart"
+
+exe_cmd "newgrp docker"
