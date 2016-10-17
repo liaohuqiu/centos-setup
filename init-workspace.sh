@@ -33,19 +33,35 @@ if [ ! -d ~/git/centos-setup/ ]; then
     exe_cmd "git clone https://github.com/liaohuqiu/centos-setup.git"
 fi
 
-exe_cmd "sudo yum update"
+function install_docker() {
+    exe_cmd "sudo yum update"
+    exe_cmd "curl -fsSL https://get.docker.com/ | sh"
+    exe_cmd "sudo systemctl enable docker.service"
+    exe_cmd "sudo systemctl start docker"
+    user=`id -un`
+    exe_cmd "sudo systemctl start docker"
+    exe_cmd "sudo gpasswd -a $user docker"
+    exe_cmd "sudo service docker restart"
+    exe_cmd "newgrp docker"
+    exe_cmd "sudo pip install docker-compose==1.8.1"
+}
 
-exe_cmd "curl -fsSL https://get.docker.com/ | sh"
+function install_pip() {
+    exe_cmd "curl 'https://bootstrap.pypa.io/get-pip.py' -o 'get-pip.py'"
+    exe_cmd "sudo python get-pip.py"
+    exe_cmd "rm get-pip.py"
+}
 
-exe_cmd "sudo systemctl enable docker.service"
-
-exe_cmd "sudo systemctl start docker"
-
-user=`id -un`
-exe_cmd "sudo systemctl start docker"
-
-exe_cmd "sudo gpasswd -a $user docker"
-
-exe_cmd "sudo service docker restart"
-
-exe_cmd "newgrp docker"
+function create_dir() {
+    local dir='/data0/docker'
+    if [ ! -d $dir ]; then
+        exe_cmd "sudo mkdir $dir"
+    fi
+    exe_cmd "sudo chown docker:docker $dir"
+    exe_cmd "sudo chown g+w $dir"
+    exe_cmd "sudo chown g+r $dir"
+    exe_cmd "sudo chown g+x $dir"
+}
+install_pip
+install_docker
+create_dir
