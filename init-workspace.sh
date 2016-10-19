@@ -35,14 +35,23 @@ fi
 
 function install_docker() {
     exe_cmd "sudo yum update"
+
+    # add docker:docker
+    exe_cmd "id -u docker &>/dev/null || sudo useradd -r -g docker docker"
+
+    # install docker
     exe_cmd "curl -fsSL https://get.docker.com/ | sh"
     exe_cmd "sudo systemctl enable docker.service"
     exe_cmd "sudo systemctl start docker"
-    user=`id -un`
     exe_cmd "sudo systemctl start docker"
-    exe_cmd "sudo gpasswd -a $user docker"
     exe_cmd "sudo service docker restart"
+
+    # add current user to docker group
+    user=`id -un`
+    exe_cmd "sudo gpasswd -a $user docker"
     exe_cmd "newgrp docker"
+
+    # install docker-compose
     exe_cmd "sudo pip install docker-compose==1.8.1"
 }
 
@@ -54,13 +63,13 @@ function install_pip() {
 
 function create_dir() {
     local dir='/data0/docker'
-    if [ ! -d $dir ]; then
+    if [ ! -d $dir]; then
         exe_cmd "sudo mkdir $dir"
     fi
     exe_cmd "sudo chown docker:docker $dir"
-    exe_cmd "sudo chown g+w $dir"
-    exe_cmd "sudo chown g+r $dir"
-    exe_cmd "sudo chown g+x $dir"
+    exe_cmd "sudo chmod g+w $dir"
+    exe_cmd "sudo chmod g+r $dir"
+    exe_cmd "sudo chmod g+x $dir"
 }
 install_pip
 install_docker
