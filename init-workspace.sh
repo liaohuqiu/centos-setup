@@ -15,7 +15,7 @@ exe_cmd "ensure_dir ~/git"
 
 if [ ! -d ~/git/work-anywhere/ ]; then
     exe_cmd "cd ~/git"
-    exe_cmd "git clone https://github.com/liaohuqiu/work-anywhere.git"
+    exe_cmd "git clone git@github.com:liaohuqiu/work-anywhere.git"
     exe_cmd "cd ~/git/work-anywhere/tools"
     exe_cmd "sh update-bash-profile.sh"
     exe_cmd "sh update-git-config.sh"
@@ -23,14 +23,14 @@ fi
 
 if [ ! -d ~/git/vim_anywhere/ ]; then
     exe_cmd "cd ~/git"
-    exe_cmd "git clone https://github.com/liaohuqiu/vim_anywhere.git"
+    exe_cmd "git clone git@github.com:liaohuqiu/vim_anywhere.git"
     exe_cmd "cd ~/git/vim_anywhere/"
     exe_cmd "sh setup.sh"
 fi
 
 if [ ! -d ~/git/centos-setup/ ]; then
     exe_cmd "cd ~/git"
-    exe_cmd "git clone https://github.com/liaohuqiu/centos-setup.git"
+    exe_cmd "git clone git@github.com:liaohuqiu/centos-setup.git"
 fi
 
 function install_docker() {
