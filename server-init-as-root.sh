@@ -13,6 +13,11 @@ exe_cmd "yum install vim -y"
 exe_cmd "yum install git -y"
 exe_cmd "yum install ctags -y"
 
+exe_cmd "firewall-cmd --zone=public --add-port=80/tcp --permanent"
+exe_cmd "firewall-cmd --zone=public --add-port=443/tcp --permanent"
+exe_cmd "firewall-cmd --zone=public --add-port=11122/tcp --permanent"
+exe_cmd "systemctl restart firewalld.service"
+
 function init_user() 
 {
     time=`date +%s`
