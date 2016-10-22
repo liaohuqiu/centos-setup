@@ -34,13 +34,8 @@ function init_user()
         return
     fi
 
-    file=add-user-without-passwd.sh
-
-    cmd="curl -s https://raw.githubusercontent.com/liaohuqiu/centos-setup/master/server-init/$file?$time > $file"
+    cmd="curl -s https://raw.githubusercontent.com/liaohuqiu/centos-setup/master/server-init/$file?$time | bash -s $user"
     exe_cmd "$cmd"
-
-    exe_cmd "sh $file $user"
-    exe_cmd "rm $file"
 
     exe_cmd "cd $home"
     exe_cmd "mkdir $home/.ssh"
