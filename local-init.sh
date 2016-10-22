@@ -20,7 +20,6 @@ function init() {
     # add current user to docker group
     user=`id -un`
     exe_cmd "sudo gpasswd -a $user docker"
-    exe_cmd "newgrp docker"
 }
 
 function intall_basic_tools() {
@@ -79,3 +78,4 @@ init
 create_dir
 install_pip
 install_docker
+exe_cmd "newgrp docker"

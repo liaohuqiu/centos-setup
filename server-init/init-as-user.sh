@@ -19,4 +19,4 @@ if [ ! -d $path ]; then
 fi
 
 exe_cmd "cd $path"
-exe_cmd "sh local-int.sh
+exe_cmd "sh local-init.sh"
