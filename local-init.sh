@@ -49,7 +49,7 @@ function install_pip() {
         exe_cmd "curl 'https://bootstrap.pypa.io/get-pip.py' -o 'get-pip.py'"
         exe_cmd "sudo python get-pip.py"
         exe_cmd "rm get-pip.py"
-    if
+    fi
 }
 
 function install_docker() {
