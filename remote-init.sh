@@ -37,7 +37,6 @@ _EOF
         echo "$config_content" >> ~/.ssh/config
         exe_cmd "chmod 700 ~/.ssh/config"
     fi
-    exe_cmd "ssh-add $ssh_keyfile"
 }
 
 function init_as_root() {
@@ -50,7 +49,9 @@ function init_as_root() {
 
 function init_as_user() {
     ssh_cmd="ssh -A $user@$ip_or_host_name"
-    cmd="curl https://raw.githubusercontent.com/liaohuqiu/centos-setup/master/server-init/init-as-user.sh?time=$time | bash -s"
+    cmd="curl https://raw.githubusercontent.com/liaohuqiu/centos-setup/master/server-init/init-as-user.sh?time=$time > init-as-user.sh"
+    exe_cmd "$ssh_cmd '$cmd'"
+    cmd='sh init-as-user.sh'
     exe_cmd "$ssh_cmd '$cmd'"
     exe_cmd "$ssh_cmd"
 }
@@ -58,4 +59,5 @@ function init_as_user() {
 init
 gen_key
 init_as_root
+sleep 1
 init_as_user
