@@ -78,4 +78,4 @@ init
 create_dir
 install_pip
 install_docker
-exe_cmd "newgrp docker"
+# exe_cmd "newgrp docker"
