@@ -12,11 +12,10 @@ function ensure_dir()
 }
 
 exe_cmd "ensure_dir ~/git"
-git_path=~/git
-path=$git_path/centos-setup
+path=~/git/centos-setup/
 
 if [ ! -d $path ]; then
-    exe_cmd "git clone git@github.com:liaohuqiu/centos-setup.git $git_path"
+    exe_cmd "git clone git@github.com:liaohuqiu/centos-setup.git $path"
 fi
 
 exe_cmd "cd $path"

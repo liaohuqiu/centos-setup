@@ -51,8 +51,6 @@ function init_as_user() {
     ssh_cmd="ssh -A $user@$ip_or_host_name"
     cmd="curl https://raw.githubusercontent.com/liaohuqiu/centos-setup/master/server-init/init-as-user.sh?time=$time > init-as-user.sh"
     exe_cmd "$ssh_cmd '$cmd'"
-    cmd='sh init-as-user.sh'
-    exe_cmd "$ssh_cmd '$cmd'"
     exe_cmd "$ssh_cmd"
 }
 
