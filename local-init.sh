@@ -23,7 +23,6 @@ function init() {
 }
 
 function intall_basic_tools() {
-    # exe_cmd "sudo install ctags -y"
     if [ ! -d ~/git/work-anywhere/ ]; then
         exe_cmd "cd ~/git"
         exe_cmd "git clone git@github.com:liaohuqiu/work-anywhere.git"
@@ -33,6 +32,7 @@ function intall_basic_tools() {
     fi
 
     exe_cmd "sudo yum install vim -y"
+    exe_cmd "sudo install ctags -y"
     if [ ! -d ~/git/vim_anywhere/ ]; then
         exe_cmd "cd ~/git"
         exe_cmd "git clone git@github.com:liaohuqiu/vim_anywhere.git"
