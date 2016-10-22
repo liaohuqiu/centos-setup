@@ -32,7 +32,7 @@ function intall_basic_tools() {
     fi
 
     exe_cmd "sudo yum install vim -y"
-    exe_cmd "sudo install ctags -y"
+    exe_cmd "sudo yum install ctags -y"
     if [ ! -d ~/git/vim_anywhere/ ]; then
         exe_cmd "cd ~/git"
         exe_cmd "git clone git@github.com:liaohuqiu/vim_anywhere.git"
@@ -43,7 +43,7 @@ function intall_basic_tools() {
 }
 
 function install_pip() {
-    if hash docker-compose 2>/dev/null; then
+    if hash pip 2>/dev/null; then
         echo 'pip has installed'
     else
         exe_cmd "curl -s 'https://bootstrap.pypa.io/get-pip.py' -o 'get-pip.py'"
@@ -67,7 +67,7 @@ function install_docker() {
 
     # install docker-compose
     if hash docker-compose 2>/dev/null; then
-        exe_cmd "docker-compose==1.8.1 has installed."
+        echo "docker-compose==1.8.1 has installed."
     else
         exe_cmd "sudo pip install docker-compose==1.8.1"
     fi
@@ -76,7 +76,7 @@ function install_docker() {
 function create_dir() {
     local dir='/data0/docker'
     if [ ! -d $dir ]; then
-        exe_cmd "sudo mkdir $dir"
+        exe_cmd "sudo mkdir -p $dir"
     fi
     exe_cmd "sudo chown docker:docker $dir"
     exe_cmd "sudo chmod g+w $dir"
@@ -89,4 +89,3 @@ create_dir
 intall_basic_tools
 install_pip
 install_docker
-exe_cmd "newgrp docker"
