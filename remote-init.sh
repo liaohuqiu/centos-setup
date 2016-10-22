@@ -44,14 +44,14 @@ function init_as_root() {
     ssh_cmd="ssh root@$ip_or_host_name"
     pub_key=`cat "$ssh_keyfile_pub"`
     time=`date +%s`
-    cmd="curl https://raw.githubusercontent.com/liaohuqiu/centos-setup/master/server-init/init-as-root.sh?time=$time | bash -s $user '$pub_key' $hostname"
+    cmd="curl https://raw.githubusercontent.com/liaohuqiu/centos-setup/master/server-init/init-as-root.sh?time=$time | bash -s $user \"$pub_key\" $hostname"
     exe_cmd "$ssh_cmd '$cmd'"
 }
 
 function init_as_user() {
     ssh_cmd="ssh -A $user@$ip_or_host_name"
     cmd="curl https://raw.githubusercontent.com/liaohuqiu/centos-setup/master/server-init/init-as-user.sh?time=$time | bash -s"
-    exe_cmd "$ssh_cmd \"$cmd\""
+    exe_cmd "$ssh_cmd '$cmd'"
     exe_cmd "$ssh_cmd"
 }
 
