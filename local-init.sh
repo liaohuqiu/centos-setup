@@ -75,7 +75,7 @@ function install_docker() {
 
 function create_dir() {
     local dir='/data0/docker'
-    if [ ! -d $dir]; then
+    if [ ! -d $dir ]; then
         exe_cmd "sudo mkdir $dir"
     fi
     exe_cmd "sudo chown docker:docker $dir"
