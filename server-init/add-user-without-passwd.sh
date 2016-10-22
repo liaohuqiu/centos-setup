@@ -8,6 +8,8 @@ function exe_cmd() {
     eval $1
 }
 
+echo $0"\n"
+
 user=$1
 exe_cmd "useradd $user"
 

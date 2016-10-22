@@ -23,7 +23,6 @@ function init() {
 }
 
 function intall_basic_tools() {
-    # exe_cmd "sudo yum install vim -y"
     # exe_cmd "sudo install ctags -y"
     if [ ! -d ~/git/work-anywhere/ ]; then
         exe_cmd "cd ~/git"
@@ -33,6 +32,7 @@ function intall_basic_tools() {
         exe_cmd "sh update-git-config.sh"
     fi
 
+    exe_cmd "sudo yum install vim -y"
     if [ ! -d ~/git/vim_anywhere/ ]; then
         exe_cmd "cd ~/git"
         exe_cmd "git clone git@github.com:liaohuqiu/vim_anywhere.git"
@@ -43,24 +43,34 @@ function intall_basic_tools() {
 }
 
 function install_pip() {
-    exe_cmd "curl 'https://bootstrap.pypa.io/get-pip.py' -o 'get-pip.py'"
-    exe_cmd "sudo python get-pip.py"
-    exe_cmd "rm get-pip.py"
+    if hash docker-compose 2>/dev/null; then
+        echo 'pip has installed'
+    else
+        exe_cmd "curl 'https://bootstrap.pypa.io/get-pip.py' -o 'get-pip.py'"
+        exe_cmd "sudo python get-pip.py"
+        exe_cmd "rm get-pip.py"
+    if
 }
 
 function install_docker() {
 
-    # exe_cmd "sudo yum update -y"
-
     # install docker
-    exe_cmd "curl -fsSL https://get.docker.com/ | sh"
-    exe_cmd "sudo systemctl enable docker.service"
-    exe_cmd "sudo systemctl start docker"
-    exe_cmd "sudo systemctl start docker"
-    exe_cmd "sudo service docker restart"
+    if hash docker 2>/dev/null; then
+        echo 'Docker has installed.'
+    else
+        exe_cmd "curl -fsSL https://get.docker.com/ | sh"
+        exe_cmd "sudo systemctl enable docker.service"
+        exe_cmd "sudo systemctl start docker"
+        exe_cmd "sudo systemctl start docker"
+        exe_cmd "sudo service docker restart"
+    fi
 
     # install docker-compose
-    exe_cmd "sudo pip install docker-compose==1.8.1"
+    if hash docker-compose 2>/dev/null; then
+        exe_cmd "docker-compose==1.8.1 has installed."
+    else
+        exe_cmd "sudo pip install docker-compose==1.8.1"
+    fi
 }
 
 function create_dir() {
@@ -76,6 +86,7 @@ function create_dir() {
 
 init
 create_dir
+intall_basic_tools
 install_pip
 install_docker
-# exe_cmd "newgrp docker"
+exe_cmd "newgrp docker"
