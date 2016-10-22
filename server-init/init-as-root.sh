@@ -36,7 +36,7 @@ function init_user()
 
     file=add-user-without-passwd.sh
 
-    cmd="curl https://raw.githubusercontent.com/liaohuqiu/centos-setup/master/server-init/$file?$time > $file"
+    cmd="curl -s https://raw.githubusercontent.com/liaohuqiu/centos-setup/master/server-init/$file?$time > $file"
     exe_cmd "$cmd"
 
     exe_cmd "sh $file $user"
@@ -49,7 +49,7 @@ function init_user()
     exe_cmd "chmod 600 $home/.ssh/authorized_keys"
 
     # # add ForwardAgent
-    # cmd="curl https://raw.githubusercontent.com/liaohuqiu/centos-setup/master/config-templates/ssh/server-config?$time > $home/.ssh/config"
+    # cmd="curl -s https://raw.githubusercontent.com/liaohuqiu/centos-setup/master/config-templates/ssh/server-config?$time > $home/.ssh/config"
     # exe_cmd "$cmd"
     # exe_cmd "chmod 600 $home/.ssh/config"
 

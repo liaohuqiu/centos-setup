@@ -46,7 +46,7 @@ function install_pip() {
     if hash docker-compose 2>/dev/null; then
         echo 'pip has installed'
     else
-        exe_cmd "curl 'https://bootstrap.pypa.io/get-pip.py' -o 'get-pip.py'"
+        exe_cmd "curl -s 'https://bootstrap.pypa.io/get-pip.py' -o 'get-pip.py'"
         exe_cmd "sudo python get-pip.py"
         exe_cmd "rm get-pip.py"
     fi
