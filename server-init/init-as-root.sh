@@ -53,4 +53,4 @@ function init_user()
 }
 
 init_env
-init_user $user $ssh_pub_key
+init_user $user "$ssh_pub_key"
