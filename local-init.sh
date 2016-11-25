@@ -26,7 +26,7 @@ function intall_basic_tools() {
     if [ ! -d ~/git/work-anywhere/ ]; then
         exe_cmd "cd ~/git"
         exe_cmd "git clone git@github.com:liaohuqiu/work-anywhere.git"
-        exe_cmd "cd ~/git/work-anywhere/tools"
+        exe_cmd "cd ~/git/work-anywhere/"
         exe_cmd "sh tools/update-bash-profile.sh"
         exe_cmd "sh tools/update-git-config.sh"
     fi
