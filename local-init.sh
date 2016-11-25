@@ -27,8 +27,8 @@ function intall_basic_tools() {
         exe_cmd "cd ~/git"
         exe_cmd "git clone git@github.com:liaohuqiu/work-anywhere.git"
         exe_cmd "cd ~/git/work-anywhere/tools"
-        exe_cmd "sh update-bash-profile.sh"
-        exe_cmd "sh update-git-config.sh"
+        exe_cmd "sh tools/update-bash-profile.sh"
+        exe_cmd "sh tools/update-git-config.sh"
     fi
 
     exe_cmd "sudo yum install vim -y"
@@ -75,6 +75,15 @@ function install_docker() {
 
 function create_dir() {
     local dir='/data0/docker'
+    if [ ! -d $dir ]; then
+        exe_cmd "sudo mkdir -p $dir"
+    fi
+    exe_cmd "sudo chown docker:docker $dir"
+    exe_cmd "sudo chmod g+w $dir"
+    exe_cmd "sudo chmod g+r $dir"
+    exe_cmd "sudo chmod g+x $dir"
+
+    dir='/opt/data'
     if [ ! -d $dir ]; then
         exe_cmd "sudo mkdir -p $dir"
     fi
