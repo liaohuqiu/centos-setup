@@ -1,5 +1,5 @@
-if [ ! $# -eq 3 ]; then
-    echo "usage: $0 ip-or-host-name user-want-to-create hostname"
+if [ ! $# -eq 4 ]; then
+    echo "usage: $0 ip-or-host-name user-want-to-create hostname ssh_pub_key_path"
     exit 1
 fi
 
@@ -11,37 +11,18 @@ function exe_cmd() {
 ip_or_host_name=$1
 user=$2
 hostname=$3
-
-keys_dir=~/.ssh/keys
-ssh_keyfile=$keys_dir/auto-gen-$ip_or_host_name
-ssh_keyfile_pub=$ssh_keyfile.pub
+ssh_key_file_pub=$4
 
 function init() {
-    if [ ! -d $keys_dir ]; then
-        exe_cmd "mkdir -p $keys_dir"
-    fi
-    chmod 700 $keys_dir
-}
-
-function gen_key() {
-
-    if [ ! -f $ssh_keyfile_pub ]; then
-        exe_cmd "ssh-keygen -t rsa -b 4096 -C $ip_or_host_name -f $ssh_keyfile"
-        read -d '' config_content <<_EOF
-Host $ip_or_host_name
-    HostName $ip_or_host_name
-    User $user
-    IdentityFile $ssh_keyfile
-_EOF
-
-        echo "$config_content" >> ~/.ssh/config
-        exe_cmd "chmod 700 ~/.ssh/config"
+    if [ ! -f $ssh_key_file_pub ]; then
+        echo 'ssh key file not found'
+        exit
     fi
 }
 
 function init_as_root() {
     ssh_cmd="ssh root@$ip_or_host_name"
-    pub_key=`cat "$ssh_keyfile_pub"`
+    pub_key=`cat "$ssh_key_file_pub"`
     time=`date +%s`
     cmd="curl -s https://raw.githubusercontent.com/liaohuqiu/centos-setup/master/server-init/init-as-root.sh?time=$time | bash -s $user \"$pub_key\" $hostname"
     exe_cmd "$ssh_cmd '$cmd'"
@@ -59,7 +40,6 @@ function init_as_user() {
 }
 
 init
-gen_key
 init_as_root
 sleep 1
 init_as_user
