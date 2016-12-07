@@ -1,6 +1,3 @@
-set -e
-set -o errexit
-
 prj_path=$(cd $(dirname $0); pwd -P)
 
 function exe_cmd() {
