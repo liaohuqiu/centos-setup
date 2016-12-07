@@ -18,7 +18,6 @@ function init_env() {
 
     exe_cmd "firewall-cmd --zone=public --add-port=80/tcp --permanent"
     exe_cmd "firewall-cmd --zone=public --add-port=443/tcp --permanent"
-    exe_cmd "firewall-cmd --zone=public --add-port=11122/tcp --permanent"
     exe_cmd "systemctl restart firewalld.service"
     exe_cmd "hostnamectl set-hostname $hostname"
 }

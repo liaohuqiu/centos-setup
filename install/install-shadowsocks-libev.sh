@@ -1,6 +1,5 @@
 #!/bin/bash
 #
-. ../base.sh
 
 if [ $# -lt 2 ]; then
     echo "usage: $0 port password [method]"

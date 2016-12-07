@@ -1,3 +1,8 @@
+set -e
+set -o errexit
+
+prj_path=$(cd $(dirname $0); pwd -P)
+
 function exe_cmd() {
     echo $1
     eval $1
@@ -58,11 +63,11 @@ function install_docker() {
     if hash docker 2>/dev/null; then
         echo 'Docker has installed.'
     else
-        exe_cmd "curl -fsSL https://get.docker.com/ | sh"
-        exe_cmd "sudo systemctl enable docker.service"
-        exe_cmd "sudo systemctl start docker"
-        exe_cmd "sudo systemctl start docker"
-        exe_cmd "sudo service docker restart"
+        exe_cmd "sudo cp $prj_path/config-templates/kubernetes.repo /etc/yum.repos.d/kubernetes.repo"
+		exe_cmd "setenforce 0"
+		exe_cmd "yum install -y docker kubelet kubeadm kubectl kubernetes-cni"
+		exe_cmd "systemctl enable docker && systemctl start docker"
+		exe_cmd "systemctl enable kubelet && systemctl start kubelet"
     fi
 
     # install docker-compose
