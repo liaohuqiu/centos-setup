@@ -30,7 +30,7 @@ if [ ! -d shadowsocks-libev* ]; then
     unzip master.zip
     cd shadowsocks-libev*
     ./autogen.sh
-    ./configure --prefix=/usr && make
+    ./configure --prefix=/usr --disable-documentation && make
     make install
     mkdir -p /etc/shadowsocks-libev
     cp ./rpm/SOURCES/etc/init.d/shadowsocks-libev /etc/init.d/shadowsocks-libev
@@ -38,3 +38,4 @@ fi
 echo "$config_content" > /etc/shadowsocks-libev/config.json
 chmod +x /etc/init.d/shadowsocks-libev
 service shadowsocks-libev restart
+chkconfig shadowsocks-libev on
