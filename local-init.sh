@@ -61,10 +61,10 @@ function install_docker() {
         echo 'Docker has installed.'
     else
         exe_cmd "sudo cp $prj_path/config-templates/kubernetes.repo /etc/yum.repos.d/kubernetes.repo"
-		exe_cmd "sudo setenforce 0"
-		exe_cmd "sudo yum install -y docker kubelet kubeadm kubectl kubernetes-cni"
-		exe_cmd "sudo systemctl enable docker && sudo systemctl start docker"
-		exe_cmd "sudo systemctl enable kubelet && sudo systemctl start kubelet"
+        exe_cmd "sudo setenforce 0"
+        exe_cmd "sudo yum install -y docker kubelet kubeadm kubectl kubernetes-cni"
+        exe_cmd "sudo systemctl enable docker && sudo systemctl start docker"
+        exe_cmd "sudo systemctl enable kubelet && sudo systemctl start kubelet"
     fi
 
     # install docker-compose
