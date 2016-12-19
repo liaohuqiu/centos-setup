@@ -97,8 +97,17 @@ function create_dir() {
     exe_cmd "sudo chmod g+x $dir"
 }
 
+function install_fail2ban() {
+    exe_cmd "sudo yum install -y fail2ban"
+    exe_cmd "sudo yum install -y epel-release"
+    exe_cmd "sudo systemctl enable fail2ban"
+    exe_cmd "sudo cp $prj_path/config-templates/fail2ban/jail.local /etc/fail2ban/jail.local"
+    exe_cmd "sudo systemctl restart fail2ban"
+}
+
 init
 create_dir
 intall_basic_tools
 install_pip
 install_docker
+install_fail2ban
