@@ -65,8 +65,6 @@ function install_docker() {
         exe_cmd "sudo yum install -y docker kubelet kubeadm kubectl kubernetes-cni"
         exe_cmd "sudo systemctl enable docker && sudo systemctl start docker"
         exe_cmd "sudo systemctl enable kubelet && sudo systemctl start kubelet"
-        exe_cmd "sudo firewall-cmd --permanent --zone=trusted --change-interface=docker0"
-        exe_cmd "sudo systemctl restart firewalld.service"
     fi
 
     # install docker-compose
@@ -97,6 +95,11 @@ function create_dir() {
     exe_cmd "sudo chmod g+x $dir"
 }
 
+function install_tools() {
+    exe_cmd "sudo yum install -y htop syssstat dig lsof"
+    exe_cmd "sudo chmod +s which `ping`"
+}
+
 function install_fail2ban() {
     exe_cmd "sudo yum install -y fail2ban"
     exe_cmd "sudo yum install -y epel-release"
@@ -111,3 +114,4 @@ intall_basic_tools
 install_pip
 install_docker
 install_fail2ban
+install_tools
