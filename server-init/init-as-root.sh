@@ -22,6 +22,7 @@ function init_env() {
     exe_cmd "firewall-cmd --zone=public --add-port=443/tcp --permanent"
     exe_cmd "firewall-cmd --zone=public --add-port=11122/tcp --permanent"
     exe_cmd "firewall-cmd --permanent --zone=trusted --change-interface=docker0"
+    exe_cmd "firewall-cmd --permanent --direct --add-rule  ipv4 nat POSTROUTING 0 -j MASQUERADE"
     exe_cmd "systemctl restart firewalld.service"
     exe_cmd "hostnamectl set-hostname $hostname"
 }

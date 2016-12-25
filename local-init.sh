@@ -1,4 +1,5 @@
 prj_path=$(cd $(dirname $0); pwd -P)
+config_templates_path="$prj_path/config-templates"
 
 function exe_cmd() {
     echo $1
@@ -60,7 +61,12 @@ function install_docker() {
     if hash docker 2>/dev/null; then
         echo 'Docker has installed.'
     else
-        exe_cmd "sudo cp $prj_path/config-templates/kubernetes.repo /etc/yum.repos.d/kubernetes.repo"
+		# build docker config
+		local docker_config_path='/etc/systemd/system/docker.service.d'
+		exe_cmd "sudo mkdir $docker_config_path"
+        exe_cmd "sudo cp $config_templates_path/docker/docker.conf $docker_config_path/docker.conf"
+        exe_cmd "sudo cp $config_templates_path/docker/kubernetes.repo /etc/yum.repos.d/kubernetes.repo"
+
         exe_cmd "sudo setenforce 0"
         exe_cmd "sudo yum install -y docker kubelet kubeadm kubectl kubernetes-cni"
         exe_cmd "sudo systemctl enable docker && sudo systemctl start docker"
@@ -104,7 +110,7 @@ function install_fail2ban() {
     exe_cmd "sudo yum install -y fail2ban"
     exe_cmd "sudo yum install -y epel-release"
     exe_cmd "sudo systemctl enable fail2ban"
-    exe_cmd "sudo cp $prj_path/config-templates/fail2ban/jail.local /etc/fail2ban/jail.local"
+    exe_cmd "sudo cp $config_templates_path/fail2ban/jail.local /etc/fail2ban/jail.local"
     exe_cmd "sudo systemctl restart fail2ban"
 }
 
