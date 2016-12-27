@@ -25,26 +25,6 @@ function init() {
     exe_cmd "sudo gpasswd -a $user docker"
 }
 
-function intall_basic_tools() {
-    if [ ! -d ~/git/work-anywhere/ ]; then
-        exe_cmd "cd ~/git"
-        exe_cmd "git clone https://github.com/liaohuqiu/work-anywhere.git"
-        exe_cmd "cd ~/git/work-anywhere/"
-        exe_cmd "sh tools/update-bash-profile.sh"
-        exe_cmd "sh tools/update-git-config.sh"
-    fi
-
-    exe_cmd "sudo yum install vim -y"
-    exe_cmd "sudo yum install ctags -y"
-    if [ ! -d ~/git/vim_anywhere/ ]; then
-        exe_cmd "cd ~/git"
-        exe_cmd "git clone https://github.com/liaohuqiu/vim_anywhere.git"
-        exe_cmd "cd ~/git/vim_anywhere/"
-        exe_cmd "sh setup.sh"
-    fi
-
-}
-
 function install_pip() {
     if hash pip 2>/dev/null; then
         echo 'pip has installed'
@@ -61,11 +41,13 @@ function install_docker() {
     if hash docker 2>/dev/null; then
         echo 'Docker has installed.'
     else
+        exe_cmd 'sudo ip addr add 172.17.0.0/16 dev docker0'
+        exe_cmd 'sudo ip link set dev docker0 up'
 		# build docker config
-		local docker_config_path='/etc/systemd/system/docker.service.d'
+		local docker_config_path='/etc/sysconfig'
 		exe_cmd "sudo mkdir $docker_config_path"
-        exe_cmd "sudo cp $config_templates_path/docker/docker.conf $docker_config_path/docker.conf"
-        exe_cmd "sudo cp $config_templates_path/docker/kubernetes.repo /etc/yum.repos.d/kubernetes.repo"
+        exe_cmd "sudo cp $config_templates_path/docker/docker.conf $docker_config_path/docker"
+        exe_cmd "sudo cp $config_templates_path/docker/docker.service /usr/lib/systemd/system/docker.service"
 
         exe_cmd "sudo setenforce 0"
         exe_cmd "sudo yum install -y docker kubelet kubeadm kubectl kubernetes-cni"
