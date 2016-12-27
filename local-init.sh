@@ -103,7 +103,7 @@ function create_dir() {
 
 function install_tools() {
     exe_cmd "sudo yum install -y htop syssstat dig lsof"
-    exe_cmd "sudo chmod +s which `ping`"
+    exe_cmd "sudo chmod +s `which ping`"
 }
 
 function install_fail2ban() {
