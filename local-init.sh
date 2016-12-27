@@ -50,6 +50,7 @@ function install_docker() {
         fi
         exe_cmd "sudo cp $config_templates_path/docker/docker.conf $docker_config_path/docker"
         exe_cmd "sudo cp $config_templates_path/docker/docker.service /usr/lib/systemd/system/docker.service"
+        exe_cmd "sudo cp $config_templates_path/docker/kubernetes.repo /usr/lib/systemd/system/docker.service"
 
         exe_cmd "sudo setenforce 0"
         exe_cmd "sudo yum install -y docker kubelet kubeadm kubectl kubernetes-cni"
