@@ -45,7 +45,9 @@ function install_docker() {
         exe_cmd 'sudo ip link set dev docker0 up'
 		# build docker config
 		local docker_config_path='/etc/sysconfig'
-		exe_cmd "sudo mkdir $docker_config_path"
+        if [ ! -d "$docker_config_path" ]; then
+            exe_cmd "sudo mkdir $docker_config_path"
+        fi
         exe_cmd "sudo cp $config_templates_path/docker/docker.conf $docker_config_path/docker"
         exe_cmd "sudo cp $config_templates_path/docker/docker.service /usr/lib/systemd/system/docker.service"
 
