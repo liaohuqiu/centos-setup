@@ -1,6 +1,6 @@
 [kubernetes]
 name=Kubernetes
-baseurl=https://packages-gcloud.sunfund.com/repos/kubernetes-el7-x86_64
+baseurl=https://packages-gcloud.sunfund.com/yum/repos/kubernetes-el7-x86_64
 enabled=1
 gpgcheck=1
 repo_gpgcheck=1
