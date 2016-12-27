@@ -116,7 +116,6 @@ function install_fail2ban() {
 
 init
 create_dir
-intall_basic_tools
 install_pip
 install_docker
 install_fail2ban
