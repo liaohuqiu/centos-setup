@@ -13,6 +13,26 @@ function ensure_dir()
     fi
 }
 
+function init_env() {
+    exe_cmd "hostnamectl set-hostname $hostname"
+    exe_cmd "firewall-cmd --zone=public --add-port=22/tcp --permanent"
+    exe_cmd "firewall-cmd --zone=public --add-port=53/udp --permanent"
+    exe_cmd "firewall-cmd --zone=public --add-port=80/tcp --permanent"
+    exe_cmd "firewall-cmd --zone=public --add-port=443/tcp --permanent"
+
+    exe_cmd "firewall-cmd --permanent --zone=trusted --change-interface=docker0"
+    exe_cmd "firewall-cmd --permanent --direct --add-rule  ipv4 nat POSTROUTING 0 -j MASQUERADE"
+
+    exe_cmd "systemctl start firewalld.service"
+    exe_cmd "sudo systemctl enable firewalld && sudo systemctl start firewalld.service"
+
+    exe_cmd 'sudo brctl addbr docker0'
+    exe_cmd 'sudo ip addr add 172.20.0.0/16 dev docker0'
+    exe_cmd 'sudo ip link set dev docker0 up'
+    exe_cmd "yum install git docker -y"
+}
+
+
 function init() {
     # create docker group
     exe_cmd "getent group docker || sudo groupadd docker"

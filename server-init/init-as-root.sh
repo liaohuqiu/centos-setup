@@ -14,23 +14,7 @@ ssh_pub_key=$2
 hostname=$3
 
 function init_env() {
-    exe_cmd "firewall-cmd --zone=public --add-port=22/tcp --permanent"
-    exe_cmd "firewall-cmd --zone=public --add-port=53/udp --permanent"
-    exe_cmd "firewall-cmd --zone=public --add-port=80/tcp --permanent"
-    exe_cmd "firewall-cmd --zone=public --add-port=443/tcp --permanent"
-    exe_cmd "firewall-cmd --zone=public --add-port=11122/tcp --permanent"
-
-    exe_cmd "firewall-cmd --permanent --zone=trusted --change-interface=docker0"
-    exe_cmd "firewall-cmd --permanent --direct --add-rule  ipv4 nat POSTROUTING 0 -j MASQUERADE"
     exe_cmd "hostnamectl set-hostname $hostname"
-
-    exe_cmd "systemctl start firewalld.service"
-    exe_cmd "sudo systemctl enable firewalld && sudo systemctl start firewalld.service"
-
-    exe_cmd 'sudo brctl addbr docker0'
-    exe_cmd 'sudo ip addr add 172.20.0.0/16 dev docker0'
-    exe_cmd 'sudo ip link set dev docker0 up'
-    exe_cmd "yum install git docker -y"
 }
 
 function init_user() 
@@ -53,13 +37,6 @@ function init_user()
     exe_cmd "chmod 700 $home/.ssh"
     echo $key >> $home/.ssh/authorized_keys
     exe_cmd "chmod 600 $home/.ssh/authorized_keys"
-
-    # # add ForwardAgent
-    # cmd="curl -s https://raw.githubusercontent.com/liaohuqiu/centos-setup/master/config-templates/ssh/server-config?$time > $home/.ssh/config"
-    # exe_cmd "$cmd"
-    # exe_cmd "chmod 600 $home/.ssh/config"
-
-    # exe_cmd "echo 'ForwardAgent yes' >> /etc/ssh/ssh_config"
 
     exe_cmd "chown -R $user:$user $home/.ssh"
 }
