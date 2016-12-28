@@ -41,8 +41,6 @@ function install_docker() {
     if hash docker 2>/dev/null; then
         echo 'Docker has installed.'
     else
-        exe_cmd 'sudo ip addr add 172.17.0.0/16 dev docker0'
-        exe_cmd 'sudo ip link set dev docker0 up'
 		# build docker config
 		local docker_config_path='/etc/sysconfig'
         if [ ! -d "$docker_config_path" ]; then
@@ -53,8 +51,9 @@ function install_docker() {
         exe_cmd "sudo cp $config_templates_path/docker/kubernetes.repo /usr/lib/systemd/system/docker.service"
 
         exe_cmd "sudo setenforce 0"
-        exe_cmd "sudo yum install -y docker kubelet kubeadm kubectl kubernetes-cni"
         exe_cmd "sudo systemctl enable docker && sudo systemctl start docker"
+
+        exe_cmd "sudo yum install -y docker kubelet kubeadm kubectl kubernetes-cni"
         exe_cmd "sudo systemctl enable kubelet && sudo systemctl start kubelet"
     fi
 
